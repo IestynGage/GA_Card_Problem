@@ -1,13 +1,30 @@
-import Chromosome.Chromosome;
+iimport Chromosome.Chromosome;
 import Chromosome.ChromosomeFactory;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Main
+ * This file allows the user to maniuplate the population by entering input into the terminal.
+ *
+ * @author Iestyn Gage
+ * @date 08/06/2019
+ * @version 1.0
+ */
 public class Main {
 
+    ///////////////////////
+    //  Objects
+    ///////////////////////
     ChromosomeFactory population = new ChromosomeFactory();
 
+    ///////////////////////
+    //  Methods
+    ///////////////////////
+
+    /**
+     * This method prints several strings to display the 5 options of the program
+     */
     public void menuOptions(){
         System.out.println("---- Menu ----");
         System.out.println("1 - Next 10 Generationn");
@@ -18,7 +35,10 @@ public class Main {
         System.out.println("----=======----");
     }
 
-    public void menuLoop() throws IOException {
+    /**
+     * This runs a loop that prints the menu, then interprets the input, then call another method to preform the menu action.
+     */
+    public void menuLoop(){
         boolean quit = false;
         Scanner scanner = new Scanner(System.in);
         int option;
@@ -53,6 +73,9 @@ public class Main {
 
     }
 
+    /**
+     * This runs the population next generation method ten times
+     */
     private void nextGeneration(){
         for(int i=0;i<10;i++){
             population.nextGeneration();
@@ -60,6 +83,9 @@ public class Main {
 
     }
 
+    /**
+     * This gets the best solution from the population, it then prints the best solution
+     */
     private void getBest(){
         Chromosome best = population.getBestSolution();
         System.out.println("----------------");
@@ -67,6 +93,9 @@ public class Main {
         System.out.println("----------------");
     }
 
+    /**
+     * This gets all the chromosome that are in the population
+     */
     private void getAll(){
         ArrayList<Chromosome> thePopulation = population.getPopulation();
         for (Chromosome eachChromosome :thePopulation) {
@@ -76,17 +105,30 @@ public class Main {
         }
     }
 
+    /**
+     * This prints the amount of population
+     */
     private void getPopulationDetails(){
         int generation = population.getGeneration();
+        System.out.println("----------------");
         System.out.println("The Population Number is: "+ generation);
+        Chromosome theBest = population.getBestSolution();
+        if(theBest.fitnessFunction()==0){
+            System.out.println("Has converange been reached: True");
+        } else {
+            System.out.println("Has converange been reached: False");
+        }
+        System.out.println("Chromosome Killed: " + population.getChromosomeKilled());
+        System.out.println("----------------");
     }
 
+    /**
+     * This runs the application
+     * @param args
+     */
     public static void main(String args[]){
         Main application = new Main();
-        try {
-            application.menuLoop();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        application.menuLoop();
+
     }
 }
